@@ -25,6 +25,7 @@ DCSHOSTS=/usr/local/etc/DCS_Hosts.txt
 DExtraHOSTS=/usr/local/etc/DExtra_Hosts.txt
 DMRIDFILE=/usr/local/etc/DMRIds.dat
 DMRHOSTS=/usr/local/etc/DMR_Hosts.txt
+DMRNEWHOSTS=/usr/local/etc/DMRHosts.txt
 DPlusHOSTS=/usr/local/etc/DPlus_Hosts.txt
 P25HOSTS=/usr/local/etc/P25Hosts.txt
 M17HOSTS=/usr/local/etc/M17Hosts.txt
@@ -56,6 +57,7 @@ if [ ${FILEBACKUP} -ne 0 ]; then
 	cp ${DExtraHOSTS} ${DExtraHOSTS}.$(date +%Y%m%d)
 	cp ${DMRIDFILE} ${DMRIDFILE}.$(date +%Y%m%d)
 	cp ${DMRHOSTS} ${DMRHOSTS}.$(date +%Y%m%d)
+	cp ${DMRNEWHOSTS} ${DMRNEWHOSTS}.$(date +%Y%m%d)
 	cp ${DPlusHOSTS} ${DPlusHOSTS}.$(date +%Y%m%d)
 	cp ${P25HOSTS} ${P25HOSTS}.$(date +%Y%m%d)
 	cp ${M17HOSTS} ${M17HOSTS}.$(date +%Y%m%d)
@@ -76,6 +78,7 @@ ${DCSHOSTS}
 ${DExtraHOSTS}
 ${DMRIDFILE}
 ${DMRHOSTS}
+${DMRNEWHOSTS}
 ${DPlusHOSTS}
 ${P25HOSTS}
 ${M17HOSTS}
@@ -105,6 +108,9 @@ done
 curl --fail -o ${APRSHOSTS} -s http://www.pistar.uk/downloads/APRS_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
 curl --fail -o ${DCSHOSTS} -s http://www.pistar.uk/downloads/DCS_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
 curl --fail -o ${DMRHOSTS} -s http://www.pistar.uk/downloads/DMR_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
+echo "AA_TreeHouse_DMR		2147999	dmr.pa7lim.nl			passw0rd	55555" >> ${DMRHOSTS}
+
+
 if [ -f /etc/hostfiles.nodextra ]; then
   # Move XRFs to DPlus Protocol
   curl --fail -o ${DPlusHOSTS} -s http://www.pistar.uk/downloads/DPlus_WithXRF_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
@@ -149,6 +155,10 @@ wget -O /tmp/group.txt http://master.brandmeister.es/status/status.php
 wget -O /tmp/data.json http://api.brandmeister.network/v1.0/groups/
 /usr/bin/python /usr/local/sbin/tg_generate.py
 
+mv /tmp/TGList.txt ${DMRNEWHOSTS}
+rm -f /tmp/group.txt
+rm -f /tmp/data.json
+rm -f /tmp/TGList.txt
 
 # Fix DMRGateway issues with brackets
 if [ -f "/etc/dmrgateway" ]; then
