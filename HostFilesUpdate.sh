@@ -150,15 +150,8 @@ curl --fail -o ${DMRPA7HOSTS} -s http://212.237.3.141/database/DMRPA7_Talkgroups
 curl --fail -o ${DMRIDFILE} -s https://ham-digital.org/status/DMRIds.dat
 
 # Generate DMR Hosts file
+cp /usr/local/sbin/TGList.txt ${DMRNEWHOSTS}
 
-wget -O /tmp/group.txt http://master.brandmeister.es/status/status.php
-wget -O /tmp/data.json http://api.brandmeister.network/v1.0/groups/
-/usr/bin/python /usr/local/sbin/tg_generate.py
-
-mv /tmp/TGList.txt ${DMRNEWHOSTS}
-rm -f /tmp/group.txt
-rm -f /tmp/data.json
-rm -f /tmp/TGList.txt
 
 # Fix DMRGateway issues with brackets
 if [ -f "/etc/dmrgateway" ]; then
