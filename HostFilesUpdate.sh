@@ -108,7 +108,7 @@ done
 curl --fail -o ${APRSHOSTS} -s http://www.pistar.uk/downloads/APRS_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
 curl --fail -o ${DCSHOSTS} -s http://www.pistar.uk/downloads/DCS_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
 curl --fail -o ${DMRHOSTS} -s http://www.pistar.uk/downloads/DMR_Hosts.txt --user-agent "Pi-Star_${pistarCurVersion}"
-echo "AA_TreeHouse_DMR		2147999	dmr.pa7lim.nl			passw0rd	55555" >> ${DMRHOSTS}
+#echo "AA_TreeHouse_DMR		2147999	dmr.pa7lim.nl			passw0rd	55555" >> ${DMRHOSTS}
 
 
 if [ -f /etc/hostfiles.nodextra ]; then
