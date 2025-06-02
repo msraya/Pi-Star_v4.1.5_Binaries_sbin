@@ -147,7 +147,10 @@ fi
 curl --fail -o ${TGLISTYSF} -s http://www.pistar.uk/downloads/TGList_YSF.txt
 curl --fail -o ${DMRPHOSTS} -s https://fcs004.xreflector.net/reflector.db
 curl --fail -o ${DMRPA7HOSTS} -s http://212.237.3.141/database/DMRPA7_Talkgroups.txt
-curl --fail -o ${DMRIDFILE} -s https://ham-digital.org/status/DMRIds.dat
+
+# DMR IDs now served by RadioID.net
+DATABASEURL='https://database.radioid.net/static/user.csv'
+curl ${DATABASEURL} 2>/dev/null | sed -e 's/\t//g' | awk -F"," '/,/{gsub(/ /, "", $2); printf "%s\t%s\t%s\n", $1, $2, $3}' | sed -e 's/\(.\) .*/\1/g' > ${DMRIDFILE}
 
 # Generate DMR Hosts file
 cp /usr/local/sbin/TGList.txt ${DMRNEWHOSTS}
